@@ -19,7 +19,7 @@
 #
 
 if [ -z "$1" ]; then
-  >&2 echo "Usage: $0 real|expression"
+  >&2 echo "Usage: "`basename $0`" real|expression"
   exit 1
 fi
 
