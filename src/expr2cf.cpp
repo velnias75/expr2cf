@@ -3,18 +3,18 @@
  *
  * This file is part of expr2cf.
  *
- * rational is free software: you can redistribute it and/or modify
+ * expr2cf is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
  *
- * rational is distributed in the hope that it will be useful,
+ * expr2cf is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with rational.  If not, see <http://www.gnu.org/licenses/>.
+ * along with expr2cf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <iostream>
@@ -25,7 +25,7 @@
 
 #include <rational/gmp_rational.h>
 
-int main(int argc, const char *argv[]) {
+int main(int, const char *[]) {
 
 	try {
 

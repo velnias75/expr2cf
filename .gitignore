@@ -14,3 +14,15 @@ install-sh
 ltmain.sh
 m4/*.m4
 missing
+Makefile
+config.cache
+config.h
+config.log
+config.status
+expr2cf-*.tar.xz
+libtool
+src/.deps/
+src/Makefile
+src/expr2cf
+src/*.o
+stamp-h1
