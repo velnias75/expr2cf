@@ -26,3 +26,6 @@ src/Makefile
 src/expr2cf
 src/*.o
 stamp-h1
+core*
+src/cf2expr
+
