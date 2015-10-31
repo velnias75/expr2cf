@@ -27,6 +27,12 @@
 
 int main(int, const char *[]) {
 
+	mpf_set_default_prec(262197);
+
+#ifdef HAVE_MPREAL_H
+	mpfr_set_default_prec(std::min<mpfr_prec_t>(262197, MPFR_PREC_MAX));
+#endif
+
 	try {
 
 		Commons::Math::gmp_rational r;

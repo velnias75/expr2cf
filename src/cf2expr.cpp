@@ -43,6 +43,8 @@ struct cf_reader : std::ctype<char> {
 
 int main(int, const char *[]) {
 
+	mpf_set_default_prec(262197);
+
 	try {
 
 		std::cin.imbue(std::locale(std::locale(), new cf_reader()));
