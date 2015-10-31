@@ -28,4 +28,4 @@ src/*.o
 stamp-h1
 core*
 src/cf2expr
-
+src/rd2frac
