@@ -1,4 +1,4 @@
-bin_PROGRAMS = expr2cf cf2expr
+bin_PROGRAMS = expr2cf cf2expr rd2frac
 
 expr2cf_CXXFLAGS = -fexceptions $(RATIONAL_CFLAGS)
 expr2cf_SOURCES = expr2cf.cpp
@@ -9,3 +9,8 @@ cf2expr_CXXFLAGS = -fexceptions $(RATIONAL_CFLAGS)
 cf2expr_SOURCES = cf2expr.cpp
 cf2expr_LDFLAGS = -Wl,--as-needed
 cf2expr_LDADD = $(RATIONAL_LIBS)
+
+rd2frac_CXXFLAGS = -fexceptions $(RATIONAL_CFLAGS)
+rd2frac_SOURCES = rd2frac.cpp
+rd2frac_LDFLAGS = -Wl,--as-needed
+rd2frac_LDADD = $(RATIONAL_LIBS)
