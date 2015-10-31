@@ -43,7 +43,7 @@ struct cf_reader : std::ctype<char> {
 
 int main(int, const char *[]) {
 
-	mpf_set_default_prec(262197);
+	mpf_set_default_prec(65536);
 
 	try {
 

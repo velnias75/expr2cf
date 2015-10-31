@@ -27,10 +27,10 @@
 
 int main(int, const char *[]) {
 
-	mpf_set_default_prec(262197);
+	mpf_set_default_prec(65536);
 
 #ifdef HAVE_MPREAL_H
-	mpfr_set_default_prec(std::min<mpfr_prec_t>(262197, MPFR_PREC_MAX));
+	mpfr_set_default_prec(std::min<mpfr_prec_t>(65536, MPFR_PREC_MAX));
 #endif
 
 	try {
