@@ -27,6 +27,13 @@
 
 int main(int argc, const char *argv[]) {
 
+	if(argc == 1) {
+		std::cout << "Usage: repeating digit seq " \
+			"[leading zeros] [initial digit seq] [leading zeros before initial seq]" << std::endl;
+
+		return EXIT_SUCCESS;
+	}
+
 	mpf_set_default_prec(65536);
 
 #ifdef HAVE_MPREAL_H
