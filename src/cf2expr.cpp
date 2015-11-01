@@ -19,7 +19,6 @@
 
 #include <iostream>
 #include <iterator>
-#include <cstdlib>
 
 #include <rational/gmp_rational.h>
 

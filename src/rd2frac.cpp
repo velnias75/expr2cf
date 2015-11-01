@@ -18,10 +18,6 @@
  */
 
 #include <iostream>
-#include <iterator>
-#include <cstdlib>
-#include <sstream>
-#include <ios>
 
 #include <rational/gmp_rational.h>
 
@@ -34,10 +30,10 @@ int main(int argc, const char *argv[]) {
 		return EXIT_SUCCESS;
 	}
 
-	mpf_set_default_prec(65536);
+	mpf_set_default_prec(256);
 
 #ifdef HAVE_MPREAL_H
-	mpfr_set_default_prec(std::min<mpfr_prec_t>(65536, MPFR_PREC_MAX));
+	mpfr_set_default_prec(std::min<mpfr_prec_t>(256, MPFR_PREC_MAX));
 #endif
 
 	try {
@@ -47,8 +43,7 @@ int main(int argc, const char *argv[]) {
 		const std::size_t lz(argc > 2 ? static_cast<std::size_t>(std::atol(argv[2])) : 0u);
 		const std::size_t plz(argc > 4 ? static_cast<std::size_t>(std::atol(argv[4])) : 0u);
 
-		std::cout << Commons::Math::rf<mpz_class, Commons::Math::GCD_gmp,
-			Commons::Math::NO_OPERATOR_CHECK>(x, lz, pre, plz) << std::endl;
+		std::cout << Commons::Math::rf<Commons::Math::gmp_rational>(x, lz, pre, plz) << std::endl;
 
 	} catch(const std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
