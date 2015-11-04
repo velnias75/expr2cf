@@ -40,9 +40,9 @@ int main(int, const char *[]) {
 
 		std::cout << "[ " << r.decompose(i) << ", ";
 
-		if(!i.reptent_digits.empty()) {
+		if(!i.pre_digits.empty()) {
 
-			std::copy(i.reptent_digits.begin(), i.reptent_digits.end(),
+			std::copy(i.pre_digits.begin(), i.pre_digits.end(),
 				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
 
 		} else {
@@ -51,9 +51,9 @@ int main(int, const char *[]) {
 
 		std::cout << ", ";
 
-		if(!i.pre_digits.empty()) {
+		if(!i.reptent_digits.empty()) {
 
-			std::copy(i.pre_digits.begin(), i.pre_digits.end(),
+			std::copy(i.reptent_digits.begin(), i.reptent_digits.end(),
 				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
 
 		} else {
