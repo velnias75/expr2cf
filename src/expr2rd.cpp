@@ -22,6 +22,9 @@
 
 #include <rational/gmp_rational.h>
 
+static const char *EMPTY = "{-}";
+static const char *COMMA = ", ";
+
 int main(int, const char *[]) {
 
 	mpf_set_default_prec(65536);
@@ -38,7 +41,7 @@ int main(int, const char *[]) {
 
 		Commons::Math::gmp_rational::rf_info i;
 
-		std::cout << "[ " << r.decompose(i) << ", ";
+		std::cout << "[ " << r.decompose(i) << COMMA;
 
 		if(!i.pre_digits.empty()) {
 
@@ -46,10 +49,10 @@ int main(int, const char *[]) {
 				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
 
 		} else {
-			std::cout << "0";
+			std::cout << EMPTY;
 		}
 
-		std::cout << ", ";
+		std::cout << COMMA;
 
 		if(!i.reptent_digits.empty()) {
 
@@ -57,7 +60,7 @@ int main(int, const char *[]) {
 				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
 
 		} else {
-			std::cout << "0";
+			std::cout << EMPTY;
 		}
 
 		std::cout << " ]" << std::endl;
