@@ -47,8 +47,7 @@ int main(int, const char *[]) {
 
 		if(!i.pre_digits.empty()) {
 
-			if(isNegative && !i.pre_digits.empty() && i.pre_digits.front() <
-				Commons::Math::gmp_rational::zero_) {
+			if(isNegative && i.pre_digits.front() < Commons::Math::gmp_rational::zero_) {
 					i.pre_digits.front() =
 						Commons::Math::gmp_rational::integer_type(-i.pre_digits.front());
 			}
@@ -60,8 +59,7 @@ int main(int, const char *[]) {
 
 		if(!i.reptent_digits.empty()) {
 
-			if(isNegative && !i.reptent_digits.empty() && i.reptent_digits.front() <
-				Commons::Math::gmp_rational::zero_) {
+			if(isNegative && i.reptent_digits.front() < Commons::Math::gmp_rational::zero_) {
 					i.reptent_digits.front() =
 						Commons::Math::gmp_rational::integer_type(-i.reptent_digits.front());
 			}
