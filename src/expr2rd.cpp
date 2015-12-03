@@ -22,9 +22,6 @@
 
 #include <rational/gmp_rational.h>
 
-static const char *EMPTY = "{-}";
-static const char *COMMA = ", ";
-
 int main(int, const char *[]) {
 
 	mpf_set_default_prec(65536);
@@ -41,29 +38,42 @@ int main(int, const char *[]) {
 
 		Commons::Math::gmp_rational::rf_info i;
 
-		std::cout << "[ " << r.decompose(i) << COMMA;
+		const Commons::Math::gmp_rational::integer_type &w(r.decompose(i));
+		const bool isNegative = (r.numerator() < Commons::Math::gmp_rational::zero_);
+
+		std::cout << ((isNegative && w >= Commons::Math::gmp_rational::zero_) ? "-" : "") << w;
+
+		if(!(i.pre_digits.empty() && i.reptent_digits.empty())) std::cout << ".";
 
 		if(!i.pre_digits.empty()) {
+
+			if(isNegative && i.pre_digits.front() < Commons::Math::gmp_rational::zero_) {
+					i.pre_digits.front() =
+						Commons::Math::gmp_rational::integer_type(-i.pre_digits.front());
+			}
 
 			std::copy(i.pre_digits.begin(), i.pre_digits.end(),
 				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
 
-		} else {
-			std::cout << EMPTY;
 		}
 
-		std::cout << COMMA;
-
 		if(!i.reptent_digits.empty()) {
+
+			if(isNegative && i.reptent_digits.front() < Commons::Math::gmp_rational::zero_) {
+					i.reptent_digits.front() =
+						Commons::Math::gmp_rational::integer_type(-i.reptent_digits.front());
+			}
+
+			std::cout << '(';
 
 			std::copy(i.reptent_digits.begin(), i.reptent_digits.end(),
 				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
 
-		} else {
-			std::cout << EMPTY;
+			std::cout << ')';
+
 		}
 
-		std::cout << " ]" << std::endl;
+		std::cout << std::endl;
 
 	} catch(const std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
