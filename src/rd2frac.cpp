@@ -21,34 +21,40 @@
 
 #include <rational/gmp_rational.h>
 
-int main(int argc, const char *argv[]) {
+int main ( int argc, const char *argv[] ) {
 
-	if(argc == 1) {
-		std::cout << "Usage: repeating digit seq " \
-			"[leading zeros] [initial digit seq] [leading zeros before initial seq]" << std::endl;
+    if ( argc == 1 ) {
+        std::cout << "Usage: repeating digit seq " \
+                  "[leading zeros] [initial digit seq] [leading zeros before initial seq]"
+                  << std::endl;
 
-		return EXIT_SUCCESS;
-	}
+        return EXIT_SUCCESS;
+    }
 
-	mpf_set_default_prec(256);
+    mpf_set_default_prec ( 256 );
 
 #ifdef HAVE_MPREAL_H
-	mpfr_set_default_prec(std::min<mpfr_prec_t>(256, MPFR_PREC_MAX));
+    mpfr_set_default_prec ( std::min<mpfr_prec_t> ( 256, MPFR_PREC_MAX ) );
 #endif
 
-	try {
+    try {
 
-		const Commons::Math::gmp_rational::integer_type x(argc > 1 ? argv[1] : "0");
-		const Commons::Math::gmp_rational::integer_type pre(argc > 3 ? argv[3] : "0");
-		const std::size_t lz(argc > 2 ? static_cast<std::size_t>(std::atol(argv[2])) : 0u);
-		const std::size_t plz(argc > 4 ? static_cast<std::size_t>(std::atol(argv[4])) : 0u);
+        const Commons::Math::gmp_rational::integer_type x ( argc > 1 ? argv[1] : "0" );
+        const Commons::Math::gmp_rational::integer_type pre ( argc > 3 ? argv[3] : "0" );
+        const std::size_t lz ( argc > 2 ? static_cast<std::size_t> ( std::atol ( argv[2] ) ) :
+                               0u );
+        const std::size_t plz ( argc > 4 ? static_cast<std::size_t> ( std::atol ( argv[4] ) ) :
+                                0u );
 
-		std::cout << Commons::Math::rf<Commons::Math::gmp_rational>(x, lz, pre, plz) << std::endl;
+        std::cout << Commons::Math::gmp_rational ( Commons::Math::gmp_rational::rf_info ( x, lz,
+                  pre, plz ) ) << std::endl;
 
-	} catch(const std::exception &e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		return EXIT_FAILURE;
-	}
+    } catch ( const std::exception &e ) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
+
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
