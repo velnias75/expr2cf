@@ -22,63 +22,67 @@
 
 #include <rational/gmp_rational.h>
 
-int main(int, const char *[]) {
+int main ( int, const char *[] ) {
 
-	mpf_set_default_prec(65536);
+    mpf_set_default_prec ( 65536 );
 
 #ifdef HAVE_MPREAL_H
-	mpfr_set_default_prec(std::min<mpfr_prec_t>(65536, MPFR_PREC_MAX));
+    mpfr_set_default_prec ( std::min<mpfr_prec_t> ( 65536, MPFR_PREC_MAX ) );
 #endif
 
-	try {
+    try {
 
-		Commons::Math::gmp_rational r;
+        Commons::Math::gmp_rational r;
 
-		std::cin >> std::noskipws >> r;
+        std::cin >> std::noskipws >> r;
 
-		Commons::Math::gmp_rational::rf_info i;
+        Commons::Math::gmp_rational::rf_info i;
 
-		const Commons::Math::gmp_rational::integer_type &w(r.decompose(i));
-		const bool isNegative = (r.numerator() < Commons::Math::gmp_rational::zero_);
+        const Commons::Math::gmp_rational::integer_type &w ( r.decompose ( i ) );
+        const bool isNegative = ( r.numerator() < Commons::Math::gmp_rational::zero_ );
 
-		std::cout << ((isNegative && w >= Commons::Math::gmp_rational::zero_) ? "-" : "") << w;
+        std::cout << ( ( isNegative && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
 
-		if(!(i.pre_digits.empty() && i.reptent_digits.empty())) std::cout << ".";
+        if ( ! ( i.pre_digits.empty() && i.reptent_digits.empty() ) ) std::cout << ".";
 
-		if(!i.pre_digits.empty()) {
+        if ( !i.pre_digits.empty() ) {
 
-			if(isNegative && i.pre_digits.front() < Commons::Math::gmp_rational::zero_) {
-					i.pre_digits.front() =
-						Commons::Math::gmp_rational::integer_type(-i.pre_digits.front());
-			}
+            if ( isNegative && i.pre_digits.front() < Commons::Math::gmp_rational::zero_ ) {
+                i.pre_digits.front() =
+                    Commons::Math::gmp_rational::integer_type ( -i.pre_digits.front() );
+            }
 
-			std::copy(i.pre_digits.begin(), i.pre_digits.end(),
-				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
+            std::copy ( i.pre_digits.begin(), i.pre_digits.end(),
+                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
+                        ( std::cout ) );
 
-		}
+        }
 
-		if(!i.reptent_digits.empty()) {
+        if ( !i.reptent_digits.empty() ) {
 
-			if(isNegative && i.reptent_digits.front() < Commons::Math::gmp_rational::zero_) {
-					i.reptent_digits.front() =
-						Commons::Math::gmp_rational::integer_type(-i.reptent_digits.front());
-			}
+            if ( isNegative && i.reptent_digits.front() < Commons::Math::gmp_rational::zero_ ) {
+                i.reptent_digits.front() =
+                    Commons::Math::gmp_rational::integer_type ( -i.reptent_digits.front() );
+            }
 
-			std::cout << '(';
+            std::cout << '(';
 
-			std::copy(i.reptent_digits.begin(), i.reptent_digits.end(),
-				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
+            std::copy ( i.reptent_digits.begin(), i.reptent_digits.end(),
+                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
+                        ( std::cout ) );
 
-			std::cout << ')';
+            std::cout << ')';
 
-		}
+        }
 
-		std::cout << std::endl;
+        std::cout << std::endl;
 
-	} catch(const std::exception &e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		return EXIT_FAILURE;
-	}
+    } catch ( const std::exception &e ) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
+
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
