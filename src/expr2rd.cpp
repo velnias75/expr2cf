@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <iterator>
+#include <iomanip>
 
 #include <rational/gmp_rational.h>
 
@@ -39,40 +40,22 @@ int main ( int, const char *[] ) {
         Commons::Math::gmp_rational::rf_info i;
 
         const Commons::Math::gmp_rational::integer_type &w ( r.decompose ( i ) );
-        const bool isNegative = ( r.numerator() < Commons::Math::gmp_rational::zero_ );
 
-        std::cout << ( ( isNegative && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
+        std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ )
+                         && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
 
         if ( ! ( i.pre_digits.empty() && i.reptent_digits.empty() ) ) std::cout << ".";
 
         if ( !i.pre_digits.empty() ) {
-
-            if ( isNegative && i.pre_digits.front() < Commons::Math::gmp_rational::zero_ ) {
-                i.pre_digits.front() =
-                    Commons::Math::gmp_rational::integer_type ( -i.pre_digits.front() );
-            }
-
-            std::copy ( i.pre_digits.begin(), i.pre_digits.end(),
-                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
-                        ( std::cout ) );
-
+            std::cout << std::setfill ( '0' )
+                      << std::setw ( static_cast<int> ( i.pre_digits.size() ) )
+                      << i.pre;
         }
 
         if ( !i.reptent_digits.empty() ) {
-
-            if ( isNegative && i.reptent_digits.front() < Commons::Math::gmp_rational::zero_ ) {
-                i.reptent_digits.front() =
-                    Commons::Math::gmp_rational::integer_type ( -i.reptent_digits.front() );
-            }
-
-            std::cout << '(';
-
-            std::copy ( i.reptent_digits.begin(), i.reptent_digits.end(),
-                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
-                        ( std::cout ) );
-
-            std::cout << ')';
-
+            std::cout << '(' << std::setfill ( '0' )
+                      << std::setw ( static_cast<int> ( i.reptent_digits.size() ) )
+                      << i.reptend << ')';
         }
 
         std::cout << std::endl;
