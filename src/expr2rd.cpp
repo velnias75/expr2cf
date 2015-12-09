@@ -44,7 +44,7 @@ int main ( int, const char *[] ) {
         std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ )
                          && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
 
-        if ( ! ( i.pre_digits.empty() && i.reptent_digits.empty() ) ) std::cout << ".";
+        if ( ! ( i.pre_digits.empty() && i.reptend_digits.empty() ) ) std::cout << ".";
 
         if ( !i.pre_digits.empty() ) {
             std::cout << std::setfill ( '0' )
@@ -52,9 +52,9 @@ int main ( int, const char *[] ) {
                       << i.pre;
         }
 
-        if ( !i.reptent_digits.empty() ) {
+        if ( !i.reptend_digits.empty() ) {
             std::cout << '(' << std::setfill ( '0' )
-                      << std::setw ( static_cast<int> ( i.reptent_digits.size() ) )
+                      << std::setw ( static_cast<int> ( i.reptend_digits.size() ) )
                       << i.reptend << ')';
         }
 
