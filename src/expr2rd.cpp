@@ -21,7 +21,7 @@
 #include <iterator>
 #include <iomanip>
 
-#include <rational/gmp_rational.h>
+#include "libgmp_rational.h"
 
 int main ( int, const char *[] ) {
 
@@ -68,4 +68,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

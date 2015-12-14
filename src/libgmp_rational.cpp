@@ -17,36 +17,8 @@
  * along with expr2cf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <iterator>
+ #include "libgmp_rational.h"
 
-#include "libgmp_rational.h"
+template class Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp, Commons::Math::NO_OPERATOR_CHECK>;
+template class std::vector<Commons::Math::gmp_rational::integer_type>;
 
-int main(int, const char *[]) {
-
-	mpf_set_default_prec(65536);
-
-#ifdef HAVE_MPREAL_H
-	mpfr_set_default_prec(std::min<mpfr_prec_t>(65536, MPFR_PREC_MAX));
-#endif
-
-	try {
-
-		Commons::Math::gmp_rational r;
-
-		std::cin >> std::noskipws >> r;
-
-		std::ostringstream os;
-
-		Commons::Math::seq(r,
-			std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(os, ", "));
-
-		std::cout << "[" << os.str().substr(0, os.str().length() - 2) << "]" << std::endl;
-
-	} catch(const std::exception &e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		return EXIT_FAILURE;
-	}
-
-	return EXIT_SUCCESS;
-}

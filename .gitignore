@@ -33,4 +33,6 @@ src/rd2frac
 expr2cf.kdev4
 src/.kdev_include_paths
 src/expr2rd
-
+src/.libs
+*.la
+*.lo

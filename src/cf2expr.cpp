@@ -20,7 +20,7 @@
 #include <iostream>
 #include <iterator>
 
-#include <rational/gmp_rational.h>
+#include "libgmp_rational.h"
 
 struct cf_reader : std::ctype<char> {
 
