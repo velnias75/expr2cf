@@ -26,12 +26,11 @@ namespace Commons {
 
 namespace Math {
 
-extern template class Rational<mpz_class, GCD_gmp, NO_OPERATOR_CHECK>;
+extern template class __attribute__((visibility("default")))
+	Rational<mpz_class, GCD_gmp, NO_OPERATOR_CHECK>;
 
 }
 
 }
-
-extern template class std::vector<Commons::Math::gmp_rational::integer_type>;
 
 #endif /* LIBGMP_RATIONAL_H */

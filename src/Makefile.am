@@ -4,7 +4,7 @@ bin_PROGRAMS = expr2cf cf2expr rd2frac expr2rd
 noinst_HEADERS = libgmp_rational.h
 
 libgmp_rational_la_CXXFLAGS = -fexceptions -ffunction-sections -fdata-sections $(RATIONAL_CFLAGS) \
-	-fvisibility-inlines-hidden
+	-fvisibility-inlines-hidden -fvisibility=hidden
 libgmp_rational_la_CPPFLAGS = -D_GLIBCXX_VISIBILITY=0
 libgmp_rational_la_SOURCES = libgmp_rational.cpp
 libgmp_rational_la_LIBADD = $(RATIONAL_LIBS)
