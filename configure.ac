@@ -24,4 +24,12 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.2])
 
 # Checks for library functions.
 
+CXXFLAGS="${CXXFLAGS} -finline-functions -fexceptions -ffunction-sections -fdata-sections"
+CPPFLAGS="${CPPFLAGS} -Wno-inline"
+LDFLAGS="${LDFLAGS} -Wl,--gc-sections -Wl,--as-needed"
+
+AC_SUBST([CXXFLAGS])
+AC_SUBST([CPPFLAGS])
+AC_SUBST([LDFLAGS])
+
 AC_OUTPUT([Makefile src/Makefile])
