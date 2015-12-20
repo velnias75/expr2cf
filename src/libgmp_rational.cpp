@@ -22,6 +22,8 @@
 template class Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
          Commons::Math::NO_OPERATOR_CHECK>;
 
+#if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) < 40800
+
 template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
          Commons::Math::NO_OPERATOR_CHECK>::isLeftAssoc ( char );
 
@@ -33,5 +35,7 @@ template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
 
 template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
          Commons::Math::NO_OPERATOR_CHECK>::operator< ( Commons::Math::gmp_rational const& ) const;
+
+#endif
 
 // kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
