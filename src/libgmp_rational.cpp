@@ -17,8 +17,21 @@
  * along with expr2cf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include "libgmp_rational.h"
+#include "libgmp_rational.h"
 
-template class Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp, Commons::Math::NO_OPERATOR_CHECK>;
-template class std::vector<Commons::Math::gmp_rational::integer_type>;
+template class Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
+         Commons::Math::NO_OPERATOR_CHECK>;
 
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
+         Commons::Math::NO_OPERATOR_CHECK>::isLeftAssoc ( char );
+
+template unsigned char Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
+         Commons::Math::NO_OPERATOR_CHECK>::getPrec ( char );
+
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
+         Commons::Math::NO_OPERATOR_CHECK>::operator> ( Commons::Math::gmp_rational const& ) const;
+
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
+         Commons::Math::NO_OPERATOR_CHECK>::operator< ( Commons::Math::gmp_rational const& ) const;
+
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
