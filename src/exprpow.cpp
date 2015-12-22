@@ -17,6 +17,8 @@
  * along with expr2cf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
+
 #include "libgmp_rational.h"
 
 int main ( int argc, const char * argv[] ) {
