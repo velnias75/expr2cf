@@ -1,5 +1,5 @@
 lib_LTLIBRARIES = libgmp_rational.la
-bin_PROGRAMS = expr2cf cf2expr rd2frac expr2rd
+bin_PROGRAMS = expr2cf cf2expr rd2frac expr2rd exprpow
 
 noinst_HEADERS = libgmp_rational.h
 
@@ -23,3 +23,7 @@ rd2frac_LDADD = libgmp_rational.la $(RATIONAL_LIBS)
 expr2rd_CXXFLAGS = $(RATIONAL_CFLAGS)
 expr2rd_SOURCES = expr2rd.cpp
 expr2rd_LDADD = libgmp_rational.la $(RATIONAL_LIBS)
+
+exprpow_CXXFLAGS = $(RATIONAL_CFLAGS)
+exprpow_SOURCES = exprpow.cpp
+exprpow_LDADD = libgmp_rational.la $(RATIONAL_LIBS)
