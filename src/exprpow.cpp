@@ -32,7 +32,7 @@ int main ( int argc, const char * argv[] ) {
 	try {
 
 		Commons::Math::gmp_rational r;
-		Commons::Math::gmp_rational::integer_type i(argc > 1 ? argv[1] : "1");
+		Commons::Math::gmp_rational::integer_type i(argc > 1 && *(argv[1]) ? argv[1] : "1");
 
         std::cin >> std::noskipws >> r;
         std::cout << r.pow(i) << std::endl;
