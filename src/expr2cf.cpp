@@ -32,13 +32,13 @@ int main(int, const char *[]) {
 
 	try {
 
-		Commons::Math::gmp_rational r;
+		Commons::Math::gmp_nogcd_rational r;
 
 		std::cin >> std::noskipws >> r;
 
 		std::ostringstream os;
 
-		Commons::Math::seq(r,
+		Commons::Math::seq(Commons::Math::gmp_rational(r.numerator(), r.denominator()),
 			std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(os, ", "));
 
 		std::cout << "[" << os.str().substr(0, os.str().length() - 2) << "]" << std::endl;

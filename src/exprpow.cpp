@@ -31,15 +31,13 @@ int main ( int argc, const char * argv[] ) {
 
     try {
 
-		typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
-                Commons::Math::GCD_null, Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
-
-        gmp_nogcd_rational r;
-        const gmp_nogcd_rational::integer_type i ( argc > 1 && * ( argv[1] ) ? argv[1] : "1" );
+        Commons::Math::gmp_nogcd_rational r;
+        const Commons::Math::gmp_nogcd_rational::integer_type i ( argc > 1 && * ( argv[1] ) ?
+			argv[1] : "1" );
 
         std::cin >> std::noskipws >> r;
 
-        const gmp_nogcd_rational &rp ( r.pow( i ) );
+        const Commons::Math::gmp_nogcd_rational &rp ( r.pow( i ) );
         const Commons::Math::gmp_rational rs ( rp.numerator(), rp.denominator() );
 
         std::cout << rs << std::endl;

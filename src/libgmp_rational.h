@@ -29,6 +29,11 @@ namespace Math {
 extern template class __attribute__((visibility("default")))
 	Rational<mpz_class, GCD_gmp, NO_OPERATOR_CHECK>;
 
+extern template class __attribute__((visibility("default")))
+    Rational<mpz_class, GCD_null, NO_OPERATOR_CHECK>;
+
+typedef Rational<gmp_rational::integer_type, GCD_null, NO_OPERATOR_CHECK> gmp_nogcd_rational;
+
 }
 
 }

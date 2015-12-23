@@ -33,13 +33,14 @@ int main ( int, const char *[] ) {
 
     try {
 
-        Commons::Math::gmp_rational r;
+        Commons::Math::gmp_nogcd_rational r;
 
         std::cin >> std::noskipws >> r;
 
         Commons::Math::gmp_rational::rf_info i;
 
-        const Commons::Math::gmp_rational::integer_type &w ( r.decompose ( i ) );
+        const Commons::Math::gmp_rational::integer_type &
+			w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).decompose ( i ) );
 
         std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ )
                          && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
