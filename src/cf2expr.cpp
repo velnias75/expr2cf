@@ -24,11 +24,11 @@
 
 struct cf_reader : std::ctype<char> {
 
-    inline cf_reader() : std::ctype<char>(get_table()) {}
+    inline cf_reader() : std::ctype<char> ( get_table() ) {}
 
     static std::ctype_base::mask const *get_table() {
 
-        static std::vector<std::ctype_base::mask> rc(table_size, std::ctype_base::mask());
+        static std::vector<std::ctype_base::mask> rc ( table_size, std::ctype_base::mask() );
 
         rc[',']  = std::ctype_base::space;
         rc[' ']  = std::ctype_base::space;
@@ -40,22 +40,25 @@ struct cf_reader : std::ctype<char> {
     }
 };
 
-int main(int, const char *[]) {
+int main ( int, const char *[] ) {
 
-	mpf_set_default_prec(65536);
+    mpf_set_default_prec ( 65536 );
 
-	try {
+    try {
 
-		std::cin.imbue(std::locale(std::locale(), new cf_reader()));
+        std::cin.imbue ( std::locale ( std::locale(), new cf_reader() ) );
 
-		std::cout << Commons::Math::cf(
-			std::istream_iterator<Commons::Math::gmp_rational::integer_type>(std::cin),
-		std::istream_iterator<Commons::Math::gmp_rational::integer_type>()) << std::endl;
+        std::cout << Commons::Math::cf (
+                      std::istream_iterator<Commons::Math::gmp_rational::integer_type> ( std::cin ),
+                      std::istream_iterator<Commons::Math::gmp_rational::integer_type>() )
+                  << std::endl;
 
-	} catch(const std::exception &e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		return EXIT_FAILURE;
-	}
+    } catch ( const std::exception &e ) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
+
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 

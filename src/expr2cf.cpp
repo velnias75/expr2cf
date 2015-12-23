@@ -22,31 +22,34 @@
 
 #include "libgmp_rational.h"
 
-int main(int, const char *[]) {
+int main ( int, const char *[] ) {
 
-	mpf_set_default_prec(65536);
+    mpf_set_default_prec ( 65536 );
 
 #ifdef HAVE_MPREAL_H
-	mpfr_set_default_prec(std::min<mpfr_prec_t>(65536, MPFR_PREC_MAX));
+    mpfr_set_default_prec ( std::min<mpfr_prec_t> ( 65536, MPFR_PREC_MAX ) );
 #endif
 
-	try {
+    try {
 
-		Commons::Math::gmp_nogcd_rational r;
+        Commons::Math::gmp_nogcd_rational r;
 
-		std::cin >> std::noskipws >> r;
+        std::cin >> std::noskipws >> r;
 
-		std::ostringstream os;
+        std::ostringstream os;
 
-		Commons::Math::seq(Commons::Math::gmp_rational(r.numerator(), r.denominator()),
-			std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(os, ", "));
+        Commons::Math::seq ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ),
+                             std::ostream_iterator<Commons::Math::gmp_rational::integer_type> ( os,
+                                     ", " ) );
 
-		std::cout << "[" << os.str().substr(0, os.str().length() - 2) << "]" << std::endl;
+        std::cout << "[" << os.str().substr ( 0, os.str().length() - 2 ) << "]" << std::endl;
 
-	} catch(const std::exception &e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		return EXIT_FAILURE;
-	}
+    } catch ( const std::exception &e ) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
+
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 

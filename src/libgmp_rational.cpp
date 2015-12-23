@@ -39,6 +39,20 @@ template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
 template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
          Commons::Math::NO_OPERATOR_CHECK>::operator< ( Commons::Math::gmp_rational const& ) const;
 
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
+         Commons::Math::NO_OPERATOR_CHECK>::isLeftAssoc ( char );
+
+template unsigned char Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
+         Commons::Math::NO_OPERATOR_CHECK>::getPrec ( char );
+
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
+         Commons::Math::NO_OPERATOR_CHECK>::operator>
+( Commons::Math::gmp_nogcd_rational const& ) const;
+
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
+         Commons::Math::NO_OPERATOR_CHECK>::operator<
+( Commons::Math::gmp_nogcd_rational const& ) const;
+
 #endif
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 

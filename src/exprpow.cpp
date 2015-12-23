@@ -33,11 +33,11 @@ int main ( int argc, const char * argv[] ) {
 
         Commons::Math::gmp_nogcd_rational r;
         const Commons::Math::gmp_nogcd_rational::integer_type i ( argc > 1 && * ( argv[1] ) ?
-			argv[1] : "1" );
+                argv[1] : "1" );
 
         std::cin >> std::noskipws >> r;
 
-        const Commons::Math::gmp_nogcd_rational &rp ( r.pow( i ) );
+        const Commons::Math::gmp_nogcd_rational &rp ( r.pow ( i ) );
         const Commons::Math::gmp_rational rs ( rp.numerator(), rp.denominator() );
 
         std::cout << rs << std::endl;
@@ -50,4 +50,4 @@ int main ( int argc, const char * argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 

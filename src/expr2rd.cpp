@@ -40,7 +40,7 @@ int main ( int, const char *[] ) {
         Commons::Math::gmp_rational::rf_info i;
 
         const Commons::Math::gmp_rational::integer_type &
-			w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).decompose ( i ) );
+        w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).decompose ( i ) );
 
         std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ )
                          && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
@@ -69,4 +69,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
