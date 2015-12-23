@@ -31,19 +31,18 @@ int main ( int argc, const char * argv[] ) {
 
     try {
 
-        Commons::Math::gmp_rational r;
-        const Commons::Math::gmp_rational::integer_type i ( argc > 1 && * ( argv[1] ) ? argv[1] :
-                "1" );
+		typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
+                Commons::Math::GCD_null, Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
+
+        gmp_nogcd_rational r;
+        const gmp_nogcd_rational::integer_type i ( argc > 1 && * ( argv[1] ) ? argv[1] : "1" );
 
         std::cin >> std::noskipws >> r;
 
-        typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
-                Commons::Math::GCD_null, Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
+        const gmp_nogcd_rational &rp ( r.pow( i ) );
+        const Commons::Math::gmp_rational rs ( rp.numerator(), rp.denominator() );
 
-        const gmp_nogcd_rational &nr ( gmp_nogcd_rational ( r.numerator(),
-                                       r.denominator() ).pow ( i ) );
-
-        std::cout << Commons::Math::gmp_rational ( nr.numerator(), nr.denominator() ) << std::endl;
+        std::cout << rs << std::endl;
 
     } catch ( const std::exception &e ) {
         std::cerr << "Error: " << e.what() << std::endl;
@@ -53,4 +52,4 @@ int main ( int argc, const char * argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
