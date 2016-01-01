@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 by Heiko Schäfer <heiko@rangun.de>
+ * Copyright 2015-2016 by Heiko Schäfer <heiko@rangun.de>
  *
  * This file is part of expr2cf.
  *
@@ -37,20 +37,26 @@ template unsigned char Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp
          Commons::Math::NO_OPERATOR_CHECK>::getPrec ( char );
 
 template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
+         Commons::Math::NO_OPERATOR_CHECK>::operator== ( Commons::Math::gmp_rational const& ) const;
+
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
          Commons::Math::NO_OPERATOR_CHECK>::operator> ( Commons::Math::gmp_rational const& ) const;
 
 template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_gmp,
          Commons::Math::NO_OPERATOR_CHECK>::operator< ( Commons::Math::gmp_rational const& ) const;
 
-template Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
-         Commons::Math::NO_OPERATOR_CHECK> Commons::Math::Rational<mpz_class,
-                 Commons::Math::GCD_null, Commons::Math::NO_OPERATOR_CHECK>::inverse () const;
+template Commons::Math::gmp_nogcd_rational Commons::Math::Rational<mpz_class,
+         Commons::Math::GCD_null, Commons::Math::NO_OPERATOR_CHECK>::inverse () const;
 
 template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
          Commons::Math::NO_OPERATOR_CHECK>::isLeftAssoc ( char );
 
 template unsigned char Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
          Commons::Math::NO_OPERATOR_CHECK>::getPrec ( char );
+
+template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
+         Commons::Math::NO_OPERATOR_CHECK>::operator==
+( Commons::Math::gmp_nogcd_rational const& ) const;
 
 template bool Commons::Math::Rational<mpz_class, Commons::Math::GCD_null,
          Commons::Math::NO_OPERATOR_CHECK>::operator>
