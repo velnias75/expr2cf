@@ -21,7 +21,10 @@
 #include <iterator>
 #include <iomanip>
 
-#include "libgmp_rational.h"
+#include <rational/gmp_rational.h>
+
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
+	Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
 
 int main ( int, const char *[] ) {
 
@@ -33,7 +36,7 @@ int main ( int, const char *[] ) {
 
     try {
 
-        Commons::Math::gmp_nogcd_rational r;
+        gmp_nogcd_rational r;
 
         std::cin >> std::noskipws >> r;
 
@@ -69,4 +72,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

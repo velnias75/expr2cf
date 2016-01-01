@@ -20,7 +20,7 @@
 #include <iostream>
 #include <iterator>
 
-#include "libgmp_rational.h"
+#include <rational/gmp_rational.h>
 
 struct cf_reader : std::ctype<char> {
 
@@ -61,4 +61,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
