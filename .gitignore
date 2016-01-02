@@ -31,6 +31,7 @@ src/.deps/
 src/expr2cf
 src/expr2rd
 src/exprpow
+src/exprsqrt
 src/.kdev_include_paths
 src/.libs
 src/Makefile
