@@ -1,4 +1,4 @@
-bin_PROGRAMS = expr2cf cf2expr rd2frac expr2rd exprpow
+bin_PROGRAMS = expr2cf cf2expr rd2frac expr2rd exprpow exprsqrt
 
 expr2cf_CXXFLAGS = $(RATIONAL_CFLAGS)
 expr2cf_SOURCES = expr2cf.cpp
@@ -19,3 +19,7 @@ expr2rd_LDADD = $(RATIONAL_LIBS)
 exprpow_CXXFLAGS = $(RATIONAL_CFLAGS)
 exprpow_SOURCES = exprpow.cpp
 exprpow_LDADD = $(RATIONAL_LIBS)
+
+exprsqrt_CXXFLAGS = $(RATIONAL_CFLAGS)
+exprsqrt_SOURCES = exprsqrt.cpp
+exprsqrt_LDADD = $(RATIONAL_LIBS)
