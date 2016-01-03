@@ -21,7 +21,7 @@
 
 #include <rational/gmp_rational.h>
 
-int main ( int argc, const char * argv[] ) {
+int main ( int, const char *[] ) {
 
     mpf_set_default_prec ( 65536 );
 
@@ -32,7 +32,7 @@ int main ( int argc, const char * argv[] ) {
     try {
 
         Commons::Math::gmp_rational r;
-		
+
         std::cin >> std::noskipws >> r;
         std::cout << r.sqrt() << std::endl;
 
@@ -44,4 +44,4 @@ int main ( int argc, const char * argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
