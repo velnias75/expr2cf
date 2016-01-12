@@ -24,7 +24,7 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.5])
 
 # Checks for library functions.
 
-CXXFLAGS="${CXXFLAGS} -finline-functions -fexceptions -ffunction-sections -fdata-sections"
+CXXFLAGS="${CXXFLAGS} -finline-functions -fexceptions -ffunction-sections -fdata-sections -fno-rtti"
 CPPFLAGS="${CPPFLAGS} -Wno-inline"
 LDFLAGS="${LDFLAGS} -Wl,--gc-sections -Wl,--as-needed"
 

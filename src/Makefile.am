@@ -1,7 +1,5 @@
 bin_PROGRAMS = expr2cf cf2expr rd2frac expr2rd exprpow exprsqrt
 
-AM_CXXFLAGS=-finline-functions
-
 expr2cf_CXXFLAGS = $(RATIONAL_CFLAGS)
 expr2cf_SOURCES = expr2cf.cpp
 expr2cf_LDADD = $(RATIONAL_LIBS)
