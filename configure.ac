@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([expr2cf], [0.2], [heiko@rangun.de])
+AC_INIT([expr2cf], [0.3], [heiko@rangun.de])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -24,12 +24,12 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.5])
 
 # Checks for library functions.
 
-CXXFLAGS="${CXXFLAGS} -finline-functions -fexceptions -ffunction-sections -fdata-sections -fno-rtti"
-CPPFLAGS="${CPPFLAGS} -Wno-inline"
-LDFLAGS="${LDFLAGS} -Wl,--gc-sections -Wl,--as-needed"
+AC_LANG_PUSH([C++])
+AX_APPEND_COMPILE_FLAGS([-finline-functions '--param inline-min-speedup=2' -fexceptions -ffunction-sections -fdata-sections -fno-rtti])
+AX_APPEND_LINK_FLAGS([-Wl,--gc-sections -Wl,--as-needed])
+AC_LANG_POP([C++])
 
-AC_SUBST([CXXFLAGS])
+CPPFLAGS="${CPPFLAGS} -Wno-inline"
 AC_SUBST([CPPFLAGS])
-AC_SUBST([LDFLAGS])
 
 AC_OUTPUT([Makefile src/Makefile])
