@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 by Heiko Schäfer <heiko@rangun.de>
+ * Copyright 2015-2016 by Heiko Schäfer <heiko@rangun.de>
  *
  * This file is part of expr2cf.
  *
@@ -24,7 +24,7 @@
 #include <rational/gmp_rational.h>
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
-	Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
+        Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
 
 int main ( int, const char *[] ) {
 
@@ -41,25 +41,25 @@ int main ( int, const char *[] ) {
         std::cin >> std::noskipws >> r;
 
         Commons::Math::gmp_rational::rf_info i;
+        std::vector<Commons::Math::gmp_rational::rf_info::digit_type> pre, rep;
 
         const Commons::Math::gmp_rational::integer_type &
-        w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).decompose ( i ) );
+        w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).
+            decompose ( i, pre, rep ) );
 
         std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ )
                          && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
 
-        if ( ! ( i.pre_digits.empty() && i.reptend_digits.empty() ) ) std::cout << ".";
+        if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
 
-        if ( !i.pre_digits.empty() ) {
+        if ( !pre.empty() ) {
             std::cout << std::setfill ( '0' )
-                      << std::setw ( static_cast<int> ( i.pre_digits.size() ) )
-                      << i.pre;
+                      << std::setw ( static_cast<int> ( pre.size() ) ) << i.pre;
         }
 
-        if ( !i.reptend_digits.empty() ) {
+        if ( !rep.empty() ) {
             std::cout << '(' << std::setfill ( '0' )
-                      << std::setw ( static_cast<int> ( i.reptend_digits.size() ) )
-                      << i.reptend << ')';
+                      << std::setw ( static_cast<int> ( rep.size() ) ) << i.reptend << ')';
         }
 
         std::cout << std::endl;
@@ -72,4 +72,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
