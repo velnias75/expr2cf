@@ -24,7 +24,7 @@
 
 struct cf_reader : std::ctype<char> {
 
-    inline cf_reader() : std::ctype<char> ( get_table() ) {}
+    inline cf_reader(std::size_t refs = 0) : std::ctype<char>(get_table(), false, refs) {}
 
     static std::ctype_base::mask const *get_table() {
 
@@ -46,7 +46,7 @@ int main ( int, const char *[] ) {
 
     try {
 
-        std::cin.imbue ( std::locale ( std::locale(), new cf_reader() ) );
+        std::cin.imbue ( std::locale ( std::locale(), new cf_reader ) );
 
         std::cout << Commons::Math::cf (
                       std::istream_iterator<Commons::Math::gmp_rational::integer_type> ( std::cin ),

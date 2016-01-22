@@ -25,7 +25,7 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.7])
 # Checks for library functions.
 
 AC_LANG_PUSH([C++])
-AX_APPEND_COMPILE_FLAGS([-finline-functions '--param inline-min-speedup=2' -fexceptions -ffunction-sections -fdata-sections -fno-rtti])
+AX_APPEND_COMPILE_FLAGS([-finline-functions '--param inline-min-speedup=2' -fexceptions -ffunction-sections -fdata-sections])
 AX_APPEND_LINK_FLAGS([-Wl,--gc-sections -Wl,--as-needed])
 AC_LANG_POP([C++])
 
