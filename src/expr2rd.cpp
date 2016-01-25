@@ -26,7 +26,7 @@
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
 
-int main ( int, const char *[] ) {
+int main ( int argc, const char *argv[] ) {
 
     mpf_set_default_prec ( 65536 );
 
@@ -46,6 +46,12 @@ int main ( int, const char *[] ) {
         const Commons::Math::gmp_rational::integer_type &
         w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).
             decompose ( i, pre, rep ) );
+
+        if(argc > 1 && (std::string(argv[1]) == "-v" || std::string(argv[1]) == "--verbose")) {
+			if(!pre.empty()) std::cerr << (!rep.empty() ? "Pre    : " : "Tail: ")
+				<< pre.size() << std::endl;
+			if(!rep.empty()) std::cerr << "Reptend: " << rep.size() << std::endl;
+		}
 
         std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ )
                          && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
@@ -72,4 +78,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
