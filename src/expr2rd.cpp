@@ -47,14 +47,18 @@ int main ( int argc, const char *argv[] ) {
         w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).
             decompose ( i, pre, rep ) );
 
-        if(argc > 1 && (std::string(argv[1]) == "-v" || std::string(argv[1]) == "--verbose")) {
-			if(!pre.empty()) std::cerr << (!rep.empty() ? "Pre    : " : "Tail: ")
-				<< pre.size() << std::endl;
-			if(!rep.empty()) std::cerr << "Reptend: " << rep.size() << std::endl;
-		}
+        const std::string v ( argc > 1 ? argv[1] : "" );
 
-        std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ )
-                         && w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
+        if ( v == "-v" || v == "--verbose" ) {
+
+            if ( !pre.empty() ) std::cerr << ( !rep.empty() ? "Pre    : " : "Tail: " )
+                                              << pre.size() << std::endl;
+
+            if ( !rep.empty() ) std::cerr << "Reptend: " << rep.size() << std::endl;
+        }
+
+        std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ ) &&
+                         w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
 
         if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
 
@@ -78,4 +82,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
