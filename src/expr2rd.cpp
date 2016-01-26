@@ -62,14 +62,18 @@ int main ( int argc, const char *argv[] ) {
         if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
 
         if ( !pre.empty() ) {
-            std::copy(pre.begin(), pre.end(),
-				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
+            std::copy ( pre.begin(), pre.end(),
+                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
+                        ( std::cout ) );
         }
 
         if ( !rep.empty() ) {
+
             std::cout << '(';
-            std::copy(rep.begin(), rep.end(),
-				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
+
+            std::copy ( rep.begin(), rep.end(),
+                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
+                        ( std::cout ) );
             std::cout << ')';
         }
 
@@ -83,4 +87,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
