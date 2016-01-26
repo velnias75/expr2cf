@@ -19,7 +19,6 @@
 
 #include <iostream>
 #include <iterator>
-#include <iomanip>
 
 #include <rational/gmp_rational.h>
 
@@ -45,7 +44,7 @@ int main ( int argc, const char *argv[] ) {
 
         const Commons::Math::gmp_rational::integer_type &
         w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).
-            decompose ( i, pre, rep ) );
+            decompose ( i, pre, rep, true ) );
 
         const std::string v ( argc > 1 ? argv[1] : "" );
 
@@ -63,13 +62,15 @@ int main ( int argc, const char *argv[] ) {
         if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
 
         if ( !pre.empty() ) {
-            std::cout << std::setfill ( '0' )
-                      << std::setw ( static_cast<int> ( pre.size() ) ) << i.pre;
+            std::copy(pre.begin(), pre.end(),
+				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
         }
 
         if ( !rep.empty() ) {
-            std::cout << '(' << std::setfill ( '0' )
-                      << std::setw ( static_cast<int> ( rep.size() ) ) << i.reptend << ')';
+            std::cout << '(';
+            std::copy(rep.begin(), rep.end(),
+				std::ostream_iterator<Commons::Math::gmp_rational::integer_type>(std::cout));
+            std::cout << ')';
         }
 
         std::cout << std::endl;
@@ -82,4 +83,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
