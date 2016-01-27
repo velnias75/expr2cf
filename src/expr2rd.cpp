@@ -20,6 +20,10 @@
 #include <iostream>
 #include <iterator>
 
+#if (defined(__GNUG__) || defined(__clang__))
+#include <ext/pool_allocator.h>
+#endif
+
 #include <rational/gmp_rational.h>
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
@@ -40,7 +44,13 @@ int main ( int argc, const char *argv[] ) {
         std::cin >> std::noskipws >> r;
 
         Commons::Math::gmp_rational::rf_info i;
+
+#if (defined(__GNUG__) || defined(__clang__))
+        std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
+            __gnu_cxx::__pool_alloc<Commons::Math::gmp_rational::rf_info::digit_type> > pre, rep;
+#else
         std::vector<Commons::Math::gmp_rational::rf_info::digit_type> pre, rep;
+#endif
 
         const Commons::Math::gmp_rational::integer_type &
         w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).
