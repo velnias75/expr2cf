@@ -29,42 +29,7 @@
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
 
-#if (defined(__GNUG__) || defined(__clang__))
-struct _gmp_alloc {
-
-    static void *alloc ( std::size_t n ) {
-        return alloc_.allocate ( n );
-    }
-
-    static void free ( void *p, std::size_t n ) {
-        alloc_.deallocate ( static_cast<unsigned char *> ( p ), n );
-    }
-
-    static void *realloc ( void *p, std::size_t o, std::size_t n ) {
-
-        void *nm = alloc ( n );
-
-        std::copy ( static_cast<unsigned char *> ( p ), static_cast<unsigned char *> ( p ) + o,
-                    static_cast<unsigned char *> ( nm ) );
-
-        free ( p, n );
-
-        return nm;
-    }
-
-private:
-    static __gnu_cxx::__pool_alloc<unsigned char> alloc_;
-};
-
-__gnu_cxx::__pool_alloc<unsigned char> _gmp_alloc::alloc_;
-#endif
-
 int main ( int argc, const char *argv[] ) {
-
-#if (defined(__GNUG__) || defined(__clang__))
-    _gmp_alloc a;
-    mp_set_memory_functions ( &a._gmp_alloc::alloc, &a._gmp_alloc::realloc, &a._gmp_alloc::free );
-#endif
 
     mpf_set_default_prec ( 65536 );
 
