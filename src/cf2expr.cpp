@@ -24,7 +24,7 @@
 
 struct cf_reader : std::ctype<char> {
 
-    inline cf_reader(std::size_t refs = 0) : std::ctype<char>(get_table(), false, refs) {}
+    explicit cf_reader(std::size_t refs = 0) : std::ctype<char>(get_table(), false, refs) {}
 
     static std::ctype_base::mask const *get_table() {
 
