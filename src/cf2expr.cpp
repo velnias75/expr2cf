@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 by Heiko Schäfer <heiko@rangun.de>
+ * Copyright 2015-2016 by Heiko Schäfer <heiko@rangun.de>
  *
  * This file is part of expr2cf.
  *
@@ -24,7 +24,7 @@
 
 struct cf_reader : std::ctype<char> {
 
-    explicit cf_reader(std::size_t refs = 0) : std::ctype<char>(get_table(), false, refs) {}
+    explicit cf_reader ( std::size_t refs = 0 ) : std::ctype<char> ( get_table(), false, refs ) {}
 
     static std::ctype_base::mask const *get_table() {
 
@@ -61,4 +61,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
