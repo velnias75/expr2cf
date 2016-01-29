@@ -40,7 +40,7 @@ struct cf_reader : std::ctype<char> {
     }
 };
 
-int main ( int, const char *[] ) {
+int main ( int argc, const char *argv[] ) {
 
     mpf_set_default_prec ( 65536 );
 
@@ -48,10 +48,20 @@ int main ( int, const char *[] ) {
 
         std::cin.imbue ( std::locale ( std::locale(), new cf_reader ) );
 
-        std::cout << Commons::Math::cf (
-                      std::istream_iterator<Commons::Math::gmp_rational::integer_type> ( std::cin ),
-                      std::istream_iterator<Commons::Math::gmp_rational::integer_type>() )
-                  << std::endl;
+        const std::string mixed ( argc > 1 ? argv[1] : "" );
+
+        const Commons::Math::gmp_rational &r ( Commons::Math::cf (
+                std::istream_iterator<Commons::Math::gmp_rational::integer_type> ( std::cin ),
+                std::istream_iterator<Commons::Math::gmp_rational::integer_type>() ) );
+
+        if ( mixed == "-m" || mixed == "--mixed" ) {
+
+            std::string ms ( r.str ( true ) );
+            std::cout << ms.replace ( ms.find_first_of ( ' ' ), 1u, "+" ) << std::endl;
+
+        } else {
+            std::cout << r << std::endl;
+        }
 
     } catch ( const std::exception &e ) {
         std::cerr << "Error: " << e.what() << std::endl;
