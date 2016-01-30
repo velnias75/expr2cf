@@ -14,7 +14,7 @@ rd2frac_LDADD = $(RATIONAL_LIBS)
 
 expr2rd_CXXFLAGS = $(RATIONAL_CFLAGS)
 expr2rd_SOURCES = expr2rd.cpp
-expr2rd_LDADD = $(RATIONAL_LIBS)
+expr2rd_LDADD = $(RATIONAL_LIBS) $(BOOST_SYSTEM_LIBS)
 
 exprpow_CXXFLAGS = $(RATIONAL_CFLAGS)
 exprpow_SOURCES = exprpow.cpp

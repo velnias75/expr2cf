@@ -24,6 +24,15 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.8])
 
 # Checks for library functions.
 
+AC_ARG_WITH([boost], [AS_HELP_STRING([--with-boost], [use boost])],
+[ AC_LANG_PUSH([C++])
+  AC_CHECK_LIB([boost_system], [main], [
+    AC_SUBST([BOOST_SYSTEM_LIBS], [-lboost_system])
+    AC_DEFINE([BOOST_POOL_ALLOC], [1], [define to 1 to use boost::pool_allocator])
+  ])
+  AC_LANG_POP([C++])
+])
+
 AC_LANG_PUSH([C++])
 AX_APPEND_COMPILE_FLAGS([-finline-functions '--param inline-min-speedup=2' -fexceptions -ffunction-sections -fdata-sections])
 AX_APPEND_LINK_FLAGS([-Wl,--gc-sections -Wl,--as-needed])

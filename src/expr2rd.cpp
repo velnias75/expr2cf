@@ -17,10 +17,16 @@
  * along with expr2cf.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if defined(HAVE_CONFIG_H) || defined(IN_IDE_PARSER)
+#include "config.h"
+#endif
+
 #include <iostream>
 #include <iterator>
 
-#if (defined(__GNUG__) || defined(__clang__))
+#if defined(BOOST_POOL_ALLOC)
+#include <boost/pool/pool_alloc.hpp>
+#elif (defined(__GNUG__) || defined(__clang__))
 #include <ext/pool_allocator.h>
 #endif
 
@@ -28,6 +34,15 @@
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
+
+#if defined(BOOST_POOL_ALLOC)
+struct _boost_pool_alloc_cleanup {
+	~_boost_pool_alloc_cleanup() {
+		boost::singleton_pool<boost::pool_allocator_tag,
+			sizeof(Commons::Math::gmp_rational::rf_info::digit_type)>::release_memory();
+	}
+};
+#endif
 
 int main ( int argc, const char *argv[] ) {
 
@@ -45,7 +60,12 @@ int main ( int argc, const char *argv[] ) {
 
         Commons::Math::gmp_rational::rf_info i;
 
-#if (defined(__GNUG__) || defined(__clang__))
+#if defined(BOOST_POOL_ALLOC)
+		const _boost_pool_alloc_cleanup bpac;
+
+		std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
+            boost::pool_allocator<Commons::Math::gmp_rational::rf_info::digit_type> > pre, rep;
+#elif (defined(__GNUG__) || defined(__clang__))
         std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
             __gnu_cxx::__pool_alloc<Commons::Math::gmp_rational::rf_info::digit_type> > pre, rep;
 #else
@@ -99,4 +119,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
