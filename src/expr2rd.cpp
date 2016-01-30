@@ -33,11 +33,13 @@
 #include <rational/gmp_rational.h>
 
 #if defined(BOOST_POOL_ALLOC)
+template<class T> using boost_pool_alloc = boost::pool_allocator<T>;
+
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_gmp,
-        Commons::Math::NO_OPERATOR_CHECK, boost::pool_allocator> gmp_pool_rational;
+        Commons::Math::NO_OPERATOR_CHECK, boost_pool_alloc> gmp_pool_rational;
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
-        Commons::Math::NO_OPERATOR_CHECK, boost::pool_allocator> gmp_nogcd_rational;
+        Commons::Math::NO_OPERATOR_CHECK, boost_pool_alloc> gmp_nogcd_rational;
 
 struct _boost_pool_alloc_cleanup {
     ~_boost_pool_alloc_cleanup() {
