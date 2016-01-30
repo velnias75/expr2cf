@@ -25,11 +25,12 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.8])
 # Checks for library functions.
 
 AC_ARG_WITH([boost], [AS_HELP_STRING([--with-boost], [use boost])],
-[ AC_LANG_PUSH([C++])
-  AC_CHECK_LIB([boost_system], [main], [
-    AC_SUBST([BOOST_SYSTEM_LIBS], [-lboost_system])
-    AC_DEFINE([BOOST_POOL_ALLOC], [1], [define to 1 to use boost::pool_allocator])
-  ])
+[ if test x$with_boost = xyes; then
+    AC_LANG_PUSH([C++])
+    AC_CHECK_LIB([boost_system], [main], [
+      AC_SUBST([BOOST_SYSTEM_LIBS], [-lboost_system])
+      AC_DEFINE([BOOST_POOL_ALLOC], [1], [define to 1 to use boost::pool_allocator])
+  fi ])
   AC_LANG_POP([C++])
 ])
 
