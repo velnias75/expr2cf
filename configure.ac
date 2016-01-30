@@ -16,7 +16,7 @@ PKG_PROG_PKG_CONFIG([0.22])
 AX_CXX_COMPILE_STDCXX_11([noext], [mandatory])
 
 # Checks for libraries.
-PKG_CHECK_MODULES([RATIONAL], [rational >= 2.8])
+PKG_CHECK_MODULES([RATIONAL], [rational >= 2.10])
 
 # Checks for header files.
 

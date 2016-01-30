@@ -32,16 +32,35 @@
 
 #include <rational/gmp_rational.h>
 
-typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
-        Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
-
 #if defined(BOOST_POOL_ALLOC)
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_gmp,
+        Commons::Math::NO_OPERATOR_CHECK, boost::pool_allocator> gmp_pool_rational;
+
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
+        Commons::Math::NO_OPERATOR_CHECK, boost::pool_allocator> gmp_nogcd_rational;
+
 struct _boost_pool_alloc_cleanup {
     ~_boost_pool_alloc_cleanup() {
         boost::singleton_pool<boost::pool_allocator_tag,
-              sizeof ( Commons::Math::gmp_rational::rf_info::digit_type ) >::release_memory();
+              sizeof ( gmp_pool_rational::rf_info::digit_type ) >::release_memory();
+        boost::singleton_pool<boost::pool_allocator_tag,
+              sizeof ( gmp_pool_rational ) >::release_memory();
+        boost::singleton_pool<boost::pool_allocator_tag,
+              sizeof ( char ) >::release_memory();
     }
 };
+#elif (defined(__GNUG__) || defined(__clang__))
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_gmp,
+        Commons::Math::NO_OPERATOR_CHECK, __gnu_cxx::__pool_alloc> gmp_pool_rational;
+
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
+        Commons::Math::NO_OPERATOR_CHECK, __gnu_cxx::__pool_alloc> gmp_nogcd_rational;
+#else
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_gmp,
+        Commons::Math::NO_OPERATOR_CHECK> gmp_pool_rational;
+
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
+        Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
 #endif
 
 int main ( int argc, const char *argv[] ) {
@@ -58,23 +77,22 @@ int main ( int argc, const char *argv[] ) {
 
         std::cin >> std::noskipws >> r;
 
-        Commons::Math::gmp_rational::rf_info i;
+        gmp_pool_rational::rf_info i;
 
 #if defined(BOOST_POOL_ALLOC)
         const _boost_pool_alloc_cleanup bpac;
 
-        std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
-            boost::pool_allocator<Commons::Math::gmp_rational::rf_info::digit_type> > pre, rep;
+        std::vector<gmp_pool_rational::rf_info::digit_type,
+            boost::pool_allocator<gmp_pool_rational::rf_info::digit_type> > pre, rep;
 #elif (defined(__GNUG__) || defined(__clang__))
-        std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
-            __gnu_cxx::__pool_alloc<Commons::Math::gmp_rational::rf_info::digit_type> > pre, rep;
+        std::vector<gmp_pool_rational::rf_info::digit_type,
+            __gnu_cxx::__pool_alloc<gmp_pool_rational::rf_info::digit_type> > pre, rep;
 #else
-        std::vector<Commons::Math::gmp_rational::rf_info::digit_type> pre, rep;
+        std::vector<gmp_pool_rational::rf_info::digit_type> pre, rep;
 #endif
 
-        const Commons::Math::gmp_rational::integer_type &
-        w ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ).
-            decompose ( i, pre, rep, true ) );
+        const gmp_pool_rational::integer_type & w ( gmp_pool_rational ( r.numerator(),
+                r.denominator() ). decompose ( i, pre, rep, true ) );
 
         const std::string v ( argc > 1 ? argv[1] : "" );
 
@@ -86,16 +104,15 @@ int main ( int argc, const char *argv[] ) {
             if ( !rep.empty() ) std::cerr << "Reptend: " << rep.size() << std::endl;
         }
 
-        std::cout << ( ( ( r.numerator() < Commons::Math::gmp_rational::zero_ ) &&
-                         w >= Commons::Math::gmp_rational::zero_ ) ? "-" : "" ) << w;
+        std::cout << ( ( ( r.numerator() < gmp_pool_rational::zero_ ) &&
+                         w >= gmp_pool_rational::zero_ ) ? "-" : "" ) << w;
 
         if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
 
         if ( !pre.empty() ) {
 
             std::copy ( pre.begin(), pre.end(),
-                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
-                        ( std::cout ) );
+                        std::ostream_iterator<gmp_pool_rational::integer_type> ( std::cout ) );
         }
 
         if ( !rep.empty() ) {
@@ -103,8 +120,7 @@ int main ( int argc, const char *argv[] ) {
             std::cout << '(';
 
             std::copy ( rep.begin(), rep.end(),
-                        std::ostream_iterator<Commons::Math::gmp_rational::integer_type>
-                        ( std::cout ) );
+                        std::ostream_iterator<gmp_pool_rational::integer_type> ( std::cout ) );
 
             std::cout << ')';
         }
