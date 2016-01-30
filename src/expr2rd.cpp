@@ -37,10 +37,10 @@ typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commo
 
 #if defined(BOOST_POOL_ALLOC)
 struct _boost_pool_alloc_cleanup {
-	~_boost_pool_alloc_cleanup() {
-		boost::singleton_pool<boost::pool_allocator_tag,
-			sizeof(Commons::Math::gmp_rational::rf_info::digit_type)>::release_memory();
-	}
+    ~_boost_pool_alloc_cleanup() {
+        boost::singleton_pool<boost::pool_allocator_tag,
+              sizeof ( Commons::Math::gmp_rational::rf_info::digit_type ) >::release_memory();
+    }
 };
 #endif
 
@@ -61,9 +61,9 @@ int main ( int argc, const char *argv[] ) {
         Commons::Math::gmp_rational::rf_info i;
 
 #if defined(BOOST_POOL_ALLOC)
-		const _boost_pool_alloc_cleanup bpac;
+        const _boost_pool_alloc_cleanup bpac;
 
-		std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
+        std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
             boost::pool_allocator<Commons::Math::gmp_rational::rf_info::digit_type> > pre, rep;
 #elif (defined(__GNUG__) || defined(__clang__))
         std::vector<Commons::Math::gmp_rational::rf_info::digit_type,
@@ -119,4 +119,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
