@@ -35,8 +35,9 @@
 #if defined(BOOST_POOL_ALLOC)
 template<class T> using boost_pool_alloc = boost::pool_allocator<T>;
 
-typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_gmp,
-        Commons::Math::NO_OPERATOR_CHECK, boost_pool_alloc> gmp_pool_rational;
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
+        Commons::Math::gmp_rational::gcd, Commons::Math::NO_OPERATOR_CHECK,
+        boost_pool_alloc> gmp_pool_rational;
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK, boost_pool_alloc> gmp_nogcd_rational;
@@ -52,14 +53,15 @@ struct _boost_pool_alloc_cleanup {
     }
 };
 #elif (defined(__GNUG__) || defined(__clang__))
-typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_gmp,
-        Commons::Math::NO_OPERATOR_CHECK, __gnu_cxx::__pool_alloc> gmp_pool_rational;
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
+        Commons::Math::gmp_rational::gcd, Commons::Math::NO_OPERATOR_CHECK,
+        __gnu_cxx::__pool_alloc> gmp_pool_rational;
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK, __gnu_cxx::__pool_alloc> gmp_nogcd_rational;
 #else
-typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_gmp,
-        Commons::Math::NO_OPERATOR_CHECK> gmp_pool_rational;
+typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
+        Commons::Math::gmp_rational::gcd, Commons::Math::NO_OPERATOR_CHECK> gmp_pool_rational;
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
