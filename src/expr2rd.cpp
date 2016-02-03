@@ -30,6 +30,10 @@
 #include <ext/pool_allocator.h>
 #endif
 
+#if HAVE_STXXL
+#include <stxxl/vector>
+#endif
+
 #include <rational/gmp_rational.h>
 
 #if defined(BOOST_POOL_ALLOC)
@@ -69,6 +73,12 @@ typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commo
 
 int main ( int argc, const char *argv[] ) {
 
+#if HAVE_STXXL
+	const char *TMPDIR = std::getenv("TMPDIR");
+	stxxl::config::get_instance()->add_disk(stxxl::disk_config(std::string(TMPDIR ? TMPDIR :
+		"/tmp").append("/expr2rd_stxxl.###"), 0u, "syscall nodirect autogrow delete_on_exit"));
+#endif
+
     mpf_set_default_prec ( 65536 );
 
 #ifdef HAVE_MPREAL_H
@@ -83,6 +93,7 @@ int main ( int argc, const char *argv[] ) {
 
         gmp_pool_rational::rf_info i;
 
+#if !defined(HAVE_STXXL)
 #if defined(BOOST_POOL_ALLOC)
         const _boost_pool_alloc_cleanup bpac;
 
@@ -93,6 +104,9 @@ int main ( int argc, const char *argv[] ) {
             __gnu_cxx::__pool_alloc<gmp_pool_rational::rf_info::digit_type> > pre, rep;
 #else
         std::vector<gmp_pool_rational::rf_info::digit_type> pre, rep;
+#endif
+#else
+		stxxl::VECTOR_GENERATOR<gmp_pool_rational::rf_info::digit_type>::result pre, rep;
 #endif
 
         const gmp_pool_rational::integer_type & w ( gmp_pool_rational ( r.numerator(),
@@ -139,4 +153,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;

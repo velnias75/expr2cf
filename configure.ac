@@ -25,13 +25,22 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.10])
 # Checks for library functions.
 
 AC_ARG_WITH([boost], [AS_HELP_STRING([--with-boost], [use boost])],
-[ if test x$with_boost = xyes; then
-    AC_LANG_PUSH([C++])
+[ AC_LANG_PUSH([C++])
+  if test x$with_boost = xyes; then
     AC_CHECK_LIB([boost_system], [main], [
       AC_SUBST([BOOST_SYSTEM_LIBS], [-lboost_system])
-      AC_DEFINE([BOOST_POOL_ALLOC], [1], [define to 1 to use boost::pool_allocator])
-  fi ])
+      AC_DEFINE([BOOST_POOL_ALLOC], [1], [define to 1 to use boost::pool_allocator])])
+  fi
   AC_LANG_POP([C++])
+])
+
+AC_ARG_WITH([stxxl], [AS_HELP_STRING([--with-stxxl], [use STXXL])],
+[ if test x$with_stxxl = xyes; then
+    PKG_CHECK_MODULES([STXXL], [stxxl >= 1.4.1],
+      [ AC_DEFINE([HAVE_STXXL], [1], [define to 1 to use STXXL]) ],
+      [ PKG_CHECK_MODULES([STXXL], [stxxl_gentoo >= 1.4.1],
+        [ AC_DEFINE([HAVE_STXXL], [1], [define to 1 to use STXXL]) ]) ])
+  fi
 ])
 
 AC_LANG_PUSH([C++])
