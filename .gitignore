@@ -38,3 +38,7 @@ src/Makefile
 src/*.o
 src/rd2frac
 stamp-h1
+.stxxl
+*.gcda
+stxxl.errlog
+stxxl.log
