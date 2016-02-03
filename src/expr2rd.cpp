@@ -75,8 +75,12 @@ int main ( int argc, const char *argv[] ) {
 
 #if HAVE_STXXL
 	const char *TMPDIR = std::getenv("TMPDIR");
-	stxxl::config::get_instance()->add_disk(stxxl::disk_config(std::string(TMPDIR ? TMPDIR :
-		"/tmp").append("/expr2rd_stxxl.###"), 0u, "syscall nodirect autogrow delete_on_exit"));
+	std::ostringstream sxxl_disk;
+
+	sxxl_disk << (TMPDIR ? TMPDIR : "/tmp") << "/expr2rd_stxxl." << getpid();
+
+	stxxl::config::get_instance()->add_disk(stxxl::disk_config(sxxl_disk.str(), 0u,
+		"syscall nodirect autogrow delete_on_exit"));
 #endif
 
     mpf_set_default_prec ( 65536 );
