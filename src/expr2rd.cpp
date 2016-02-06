@@ -95,8 +95,6 @@ int main ( int argc, const char *argv[] ) {
 
         std::cin >> std::noskipws >> r;
 
-        gmp_pool_rational::rf_info i;
-
 #if !defined(HAVE_STXXL)
 #if defined(BOOST_POOL_ALLOC)
         const _boost_pool_alloc_cleanup bpac;
@@ -113,7 +111,9 @@ int main ( int argc, const char *argv[] ) {
         stxxl::VECTOR_GENERATOR<gmp_pool_rational::rf_info::digit_type>::result pre, rep;
 #endif
 
-        const gmp_pool_rational::integer_type & w ( gmp_pool_rational ( r.numerator(),
+        gmp_pool_rational::rf_info i;
+
+        const gmp_pool_rational::integer_type &w ( gmp_pool_rational ( r.numerator(),
                 r.denominator() ). decompose ( i, pre, rep, true ) );
 
         const std::string v ( argc > 1 ? argv[1] : "" );
@@ -126,8 +126,7 @@ int main ( int argc, const char *argv[] ) {
             if ( !rep.empty() ) std::cerr << "Reptend: " << rep.size() << std::endl;
         }
 
-        std::cout << ( ( ( r.numerator() < gmp_pool_rational::zero_ ) &&
-                         w >= gmp_pool_rational::zero_ ) ? "-" : "" ) << w;
+        std::cout << ( i.negative ? "-" : "" ) << w;
 
         if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
 
