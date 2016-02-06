@@ -126,7 +126,7 @@ int main ( int argc, const char *argv[] ) {
             if ( !rep.empty() ) std::cerr << "Reptend: " << rep.size() << std::endl;
         }
 
-        std::cout << ( i.negative ? "-" : "" ) << w;
+        std::cout << w;
 
         if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
 
@@ -156,4 +156,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
