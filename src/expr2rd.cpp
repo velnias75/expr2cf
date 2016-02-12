@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <iterator>
+#include <unistd.h>
 
 #if HAVE_STXXL
 #include <stxxl/vector>
