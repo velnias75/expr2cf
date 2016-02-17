@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 by Heiko Schäfer <heiko@rangun.de>
+ * Copyright 2015-2016 by Heiko Schäfer <heiko@rangun.de>
  *
  * This file is part of expr2cf.
  *
@@ -18,12 +18,54 @@
  */
 
 #include <iostream>
-#include <iterator>
 
 #include <rational/gmp_rational.h>
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
-	Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
+        Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
+
+template<class T, class charT = char, class traits = std::char_traits<charT> >
+class infix_ostream_iterator :
+    public std::iterator<std::output_iterator_tag, void, void, void, void> {
+
+    std::basic_ostream<charT, traits> *os;
+    charT const* delimiter;
+    bool first_elem;
+
+public:
+    typedef charT char_type;
+    typedef traits traits_type;
+    typedef std::basic_ostream<charT, traits> ostream_type;
+
+    explicit infix_ostream_iterator ( ostream_type& s ) : os ( &s ), delimiter ( 0L ),
+        first_elem ( true ) {}
+
+    infix_ostream_iterator ( ostream_type& s, charT const *d ) : os ( &s ), delimiter ( d ),
+        first_elem ( true ) {}
+
+    infix_ostream_iterator<T, charT, traits> &operator= ( T const &item ) {
+
+        if ( !first_elem && delimiter != 0 ) *os << delimiter;
+
+        *os << item;
+
+        first_elem = false;
+
+        return *this;
+    }
+
+    infix_ostream_iterator<T, charT, traits> &operator*() {
+        return *this;
+    }
+
+    infix_ostream_iterator<T, charT, traits> &operator++() {
+        return *this;
+    }
+
+    infix_ostream_iterator<T, charT, traits> &operator++ ( int ) {
+        return *this;
+    }
+};
 
 int main ( int, const char *[] ) {
 
@@ -39,13 +81,16 @@ int main ( int, const char *[] ) {
 
         std::cin >> std::noskipws >> r;
 
-        std::ostringstream os;
+        std::cout << "[";
 
-        Commons::Math::seq ( Commons::Math::gmp_rational ( r.numerator(), r.denominator() ),
-                             std::ostream_iterator<Commons::Math::gmp_rational::integer_type> ( os,
+        const Commons::Math::gmp_rational t ( r.numerator(), r.denominator() );
+        const gmp_nogcd_rational s ( t.numerator(), t.denominator() );
+
+        Commons::Math::seq ( s,
+                             infix_ostream_iterator<gmp_nogcd_rational::integer_type> ( std::cout,
                                      ", " ) );
 
-        std::cout << "[" << os.str().substr ( 0, os.str().length() - 2 ) << "]" << std::endl;
+        std::cout << "]" << std::endl;
 
     } catch ( const std::exception &e ) {
         std::cerr << "Error: " << e.what() << std::endl;
@@ -55,4 +100,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
