@@ -62,7 +62,7 @@ public:
         return *this;
     }
 
-    infix_ostream_iterator<T, charT, traits> &operator++ ( int ) {
+    infix_ostream_iterator<T, charT, traits> operator++ ( int ) {
         return *this;
     }
 };
