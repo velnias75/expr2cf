@@ -62,9 +62,12 @@ public:
         return *this;
     }
 
-    infix_ostream_iterator<T, charT, traits> operator++ ( int ) {
+#pragma GCC diagnostic ignored "-Weffc++"
+#pragma GCC diagnostic push
+    infix_ostream_iterator<T, charT, traits> &operator++ ( int ) {
         return *this;
     }
+#pragma GCC diagnostic pop
 };
 
 int main ( int, const char *[] ) {
@@ -100,4 +103,4 @@ int main ( int, const char *[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
