@@ -24,10 +24,7 @@
 #include <iostream>
 #include <iterator>
 #include <unistd.h>
-
-#if HAVE_STXXL
-#include <stxxl/vector>
-#endif
+#include <cstdint>
 
 #include <rational/gmp_rational.h>
 
@@ -37,17 +34,82 @@ typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
 
+struct digit_stdout_container {
+
+    typedef gmp_pool_rational::rf_info::digit_type value_type;
+    typedef uint64_t size_type;
+
+    typedef struct _iterator : public std::iterator<std::forward_iterator_tag, value_type> {
+
+        _iterator () : pos_ ( 0u ), tv_() {}
+
+        _iterator operator++ ( int ) {
+            _iterator tmp ( *this );
+            ++pos_;
+            return tmp;
+        }
+
+        _iterator &operator++ () {
+            ++pos_;
+            return *this;
+        }
+
+        value_type &operator*() {
+            return tv_;
+        }
+
+        bool operator== ( const _iterator &o ) const {
+            return pos_ == o.pos_;
+        }
+
+        bool operator!= ( const _iterator &o ) const {
+            return ! ( *this == o );
+        }
+
+    private:
+        size_type pos_;
+        value_type tv_;
+    } iterator;
+
+    digit_stdout_container ( bool rep ) : size_ ( 0u ), rep_ ( rep ), first_ ( true ) {}
+
+    iterator begin() const {
+        return iterator ();
+    }
+
+    iterator end() const {
+        return iterator ();
+    }
+
+    iterator insert ( const iterator &, const value_type &v ) {
+
+        std::cout << ( rep_ && first_ ? "(" : "" ) << v;
+        std::cout.flush();
+
+        ++size_;
+
+        if ( rep_ && first_ ) first_ = false;
+
+        return iterator ();
+    }
+
+    void clear() {}
+
+    size_type size() const {
+        return size_;
+    }
+
+    bool empty() const {
+        return size() == 0u;
+    }
+
+private:
+    size_type size_;
+    const bool rep_;
+    bool first_;
+};
+
 int main ( int argc, const char *argv[] ) {
-
-#if HAVE_STXXL
-    const char *TMPDIR = std::getenv ( "TMPDIR" );
-    std::ostringstream sxxl_disk;
-
-    sxxl_disk << ( TMPDIR ? TMPDIR : "/tmp" ) << "/expr2rd_stxxl." << getpid();
-
-    stxxl::config::get_instance()->add_disk ( stxxl::disk_config ( sxxl_disk.str(), 0u,
-            "syscall nodirect autogrow delete_on_exit" ) );
-#endif
 
     mpf_set_default_prec ( 65536 );
 
@@ -61,16 +123,14 @@ int main ( int argc, const char *argv[] ) {
 
         std::cin >> std::noskipws >> r;
 
-#if !defined(HAVE_STXXL)
-        std::vector<gmp_pool_rational::rf_info::digit_type> pre, rep;
-#else
-        stxxl::VECTOR_GENERATOR<gmp_pool_rational::rf_info::digit_type>::result pre, rep;
-#endif
+        digit_stdout_container pre ( false ), rep ( true );
 
         gmp_pool_rational::rf_info i;
+        const gmp_nogcd_rational::mod_type &m ( r.mod() );
 
-        const gmp_pool_rational::integer_type &w ( gmp_pool_rational ( r.numerator(),
-                r.denominator() ). decompose ( i, pre, rep, true ) );
+        std::cout << m.first << ( gmp_nogcd_rational::isInteger ( m ) ? "" : "." );
+
+        gmp_pool_rational ( r.numerator(), r.denominator() ).decompose ( i, pre, rep, true );
 
         const std::string v ( argc > 1 ? argv[1] : "" );
 
@@ -82,25 +142,7 @@ int main ( int argc, const char *argv[] ) {
             if ( !rep.empty() ) std::cerr << "Reptend: " << rep.size() << std::endl;
         }
 
-        std::cout << w;
-
-        if ( ! ( pre.empty() && rep.empty() ) ) std::cout << ".";
-
-        if ( !pre.empty() ) {
-
-            std::copy ( pre.begin(), pre.end(),
-                        std::ostream_iterator<gmp_pool_rational::integer_type> ( std::cout ) );
-        }
-
-        if ( !rep.empty() ) {
-
-            std::cout << '(';
-
-            std::copy ( rep.begin(), rep.end(),
-                        std::ostream_iterator<gmp_pool_rational::integer_type> ( std::cout ) );
-
-            std::cout << ')';
-        }
+        if ( !rep.empty() ) std::cout << ')';
 
         std::cout << std::endl;
 
