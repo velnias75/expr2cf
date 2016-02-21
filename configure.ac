@@ -23,15 +23,6 @@ PKG_CHECK_MODULES([RATIONAL], [rational >= 2.11])
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
-AC_ARG_WITH([stxxl], [AS_HELP_STRING([--with-stxxl], [use STXXL])],
-[ if test x$with_stxxl = xyes; then
-    PKG_CHECK_MODULES([STXXL], [stxxl >= 1.4.1],
-      [ AC_DEFINE([HAVE_STXXL], [1], [define to 1 to use STXXL]) ],
-      [ PKG_CHECK_MODULES([STXXL], [stxxl_gentoo >= 1.4.1],
-        [ AC_DEFINE([HAVE_STXXL], [1], [define to 1 to use STXXL]) ]) ])
-  fi
-])
-
 AC_LANG_PUSH([C++])
 AX_APPEND_COMPILE_FLAGS([-finline-functions '--param inline-min-speedup=2' -fexceptions -ffunction-sections -fdata-sections])
 AX_APPEND_LINK_FLAGS([-Wl,--gc-sections -Wl,--as-needed])
