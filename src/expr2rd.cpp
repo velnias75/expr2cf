@@ -29,19 +29,19 @@
 #include <rational/gmp_rational.h>
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type,
-        Commons::Math::gmp_rational::gcd, Commons::Math::NO_OPERATOR_CHECK> gmp_pool_rational;
+        Commons::Math::gmp_rational::gcd, Commons::Math::NO_OPERATOR_CHECK> gmp_gcd_rational;
 
 typedef Commons::Math::Rational<Commons::Math::gmp_rational::integer_type, Commons::Math::GCD_null,
         Commons::Math::NO_OPERATOR_CHECK> gmp_nogcd_rational;
 
 struct digit_stdout_container {
 
-    typedef gmp_pool_rational::rf_info::digit_type value_type;
+    typedef gmp_gcd_rational::rf_info::digit_type value_type;
     typedef uint64_t size_type;
 
-    typedef struct _iterator : public std::iterator<std::forward_iterator_tag, value_type> {
+    typedef struct _iterator : public std::iterator<std::input_iterator_tag, value_type> {
 
-        _iterator () : pos_ ( 0u ), tv_() {}
+        _iterator () : pos_ ( 0u ) {}
 
         _iterator operator++ ( int ) {
             _iterator tmp ( *this );
@@ -54,7 +54,7 @@ struct digit_stdout_container {
             return *this;
         }
 
-        value_type &operator*() {
+        reference operator*() const {
             return tv_;
         }
 
@@ -63,46 +63,44 @@ struct digit_stdout_container {
         }
 
         bool operator!= ( const _iterator &o ) const {
-            return ! ( *this == o );
+            return pos_ != o.pos_;
         }
 
     private:
         size_type pos_;
-        value_type tv_;
+        static value_type tv_;
     } iterator;
 
-    digit_stdout_container ( bool rep ) : size_ ( 0u ), rep_ ( rep ), first_ ( true ) {}
+    explicit digit_stdout_container ( bool rep ) : size_ ( 0u ), rep_ ( rep ), first_ ( true ) {}
 
-    iterator begin() const {
+    iterator begin() {
         return iterator ();
     }
 
-    iterator end() const {
+    iterator end() {
         return iterator ();
     }
 
-    iterator insert ( const iterator &, const value_type &v ) {
+    iterator insert ( iterator i, const value_type &v ) {
 
-        std::cout << ( rep_ && first_ ? "(" : "" ) << v;
-        std::cout.flush();
+        std::cout << ( ! ( rep_ && first_ ) ? "" : "(" ) << v;
 
+        first_ = false;
         ++size_;
 
-        if ( rep_ && first_ ) first_ = false;
-
-        return iterator ();
+        return i;
     }
 
     void clear() {
-		size_ = 0u;
-	}
+        size_ = 0u;
+    }
 
     size_type size() const {
         return size_;
     }
 
     bool empty() const {
-        return size() == 0u;
+        return size_ == 0u;
     }
 
 private:
@@ -110,6 +108,8 @@ private:
     const bool rep_;
     bool first_;
 };
+
+digit_stdout_container::_iterator::value_type digit_stdout_container::_iterator::tv_;
 
 int main ( int argc, const char *argv[] ) {
 
@@ -127,12 +127,14 @@ int main ( int argc, const char *argv[] ) {
 
         digit_stdout_container pre ( false ), rep ( true );
 
-        gmp_pool_rational::rf_info i;
+        gmp_gcd_rational::rf_info i;
         const gmp_nogcd_rational::mod_type &m ( r.mod() );
 
-        std::cout << m.first << ( gmp_nogcd_rational::isInteger ( m ) ? "" : "." );
+        std::cout << ( r.numerator() >= gmp_nogcd_rational::integer_type() ? "" : "-" )
+                  << m.first << ( m.second == gmp_nogcd_rational() ||
+                                  gmp_nogcd_rational::isInteger ( m ) ? "" : "." );
 
-        gmp_pool_rational ( r.numerator(), r.denominator() ).decompose ( i, pre, rep, true );
+        gmp_gcd_rational ( r.numerator(), r.denominator() ).decompose ( i, pre, rep, true );
 
         if ( !rep.empty() ) std::cout << ')';
 
@@ -156,4 +158,4 @@ int main ( int argc, const char *argv[] ) {
     return EXIT_SUCCESS;
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs on;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs on; 
