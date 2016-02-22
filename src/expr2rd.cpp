@@ -81,14 +81,14 @@ struct digit_stdout_container {
         return iterator ();
     }
 
-    iterator insert ( iterator i, const value_type &v ) {
+    iterator insert ( iterator i, value_type &&v ) {
 
         std::cout << ( ! ( rep_ && first_ ) ? "" : "(" ) << v;
 
         first_ = false;
         ++size_;
 
-        return i;
+        return ++i;
     }
 
     void clear() {

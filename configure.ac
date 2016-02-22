@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([expr2cf], [0.3], [heiko@rangun.de])
+AC_INIT([expr2cf], [0.4], [heiko@rangun.de])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -16,7 +16,7 @@ PKG_PROG_PKG_CONFIG([0.22])
 AX_CXX_COMPILE_STDCXX_11([noext], [mandatory])
 
 # Checks for libraries.
-PKG_CHECK_MODULES([RATIONAL], [rational >= 2.11])
+PKG_CHECK_MODULES([RATIONAL], [rational >= 2.12])
 
 # Checks for header files.
 
