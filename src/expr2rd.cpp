@@ -130,7 +130,8 @@ int main ( int argc, const char *argv[] ) {
         gmp_gcd_rational::rf_info i;
         const gmp_nogcd_rational::mod_type &m ( r.mod() );
 
-        std::cout << ( r.numerator() >= gmp_nogcd_rational::integer_type() ? "" : "-" )
+        std::cout << ( !(m.first >= gmp_nogcd_rational::rf_info::digit_type() &&
+                       m.second.numerator() < gmp_nogcd_rational::zero_) ? "" : "-" )
                   << m.first << ( m.second == gmp_nogcd_rational() ||
                                   gmp_nogcd_rational::isInteger ( m ) ? "" : "." );
 
