@@ -25,6 +25,7 @@
 #include <iterator>
 #include <unistd.h>
 #include <cstdint>
+#include <iomanip>
 
 #include <rational/gmp_rational.h>
 
@@ -145,8 +146,9 @@ int main ( int argc, const char *argv[] ) {
 
         if ( v == "-v" || v == "--verbose" ) {
 
-            if ( !pre.empty() ) std::cerr << ( !rep.empty() ? "Pre    : " : "Tail: " )
-                                              << pre.size() << std::endl;
+            if ( !pre.empty() ) std::cerr << std::setw( !rep.empty() ? 7 : 0 )
+                                          << ( !rep.empty() ? "Pre" : "Tail" )
+                                          << ": " << pre.size() << std::endl;
 
             if ( !rep.empty() ) std::cerr << "Reptend: " << rep.size() << std::endl;
         }
