@@ -128,7 +128,7 @@ int main ( int argc, const char *argv[] ) {
         digit_stdout_container pre ( false ), rep ( true );
 
         gmp_gcd_rational::rf_info i;
-        const gmp_nogcd_rational::mod_type &m ( r.mod() );
+        const auto &m ( r.mod() );
 
         std::cout << ( ! ( m.first >= gmp_nogcd_rational::rf_info::digit_type() &&
                            m.second.numerator() < gmp_nogcd_rational::zero_ ) ? "" : "-" )
