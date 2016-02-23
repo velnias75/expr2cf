@@ -83,7 +83,7 @@ struct digit_stdout_container {
 
     iterator insert ( iterator i, value_type &&v ) {
 
-        std::cout << ( ! ( rep_ && first_ ) ? "" : "(" ) << v;
+        gmp_printf ( "%s%Zd", ! ( rep_ && first_ ) ? "" : "(", v.get_mpz_t() );
 
         first_ = false;
         ++size_;
